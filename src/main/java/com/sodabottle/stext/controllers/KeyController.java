@@ -1,5 +1,6 @@
 package com.sodabottle.stext.controllers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -50,15 +51,18 @@ public class KeyController {
 		}
 		
 		Map<String, String> allKeys = new HashMap<>();
+		List<Long> ids = new ArrayList<>();
 		
 		List<Key> keys = keyRepo.findKeys();
 		for (Key key : keys) {
-			if(! allKeys.containsKey(key.getApiKey()))
+			if(! allKeys.containsKey(key.getApiName())) {
+				ids.add(key.getId());
 				allKeys.put(key.getApiName(), key.getApiKey());
+			}
 		}
 		
 		//Map<String, String>  allKeys = keys.stream().collect(Collectors.toMap(Key::getApiName, Key::getApiKey));
-		asyncUpdateService.updateApiKeys(keys.stream().map(key -> key.getId()).collect(Collectors.toList()));
+		asyncUpdateService.updateApiKeys(ids);
 		LogUtils.logMessage("Get Keys", log, LogState.INFO);
 		LogUtils.appender(log);
 		
