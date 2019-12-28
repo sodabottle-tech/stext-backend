@@ -1,5 +1,7 @@
 package com.sodabottle.stext.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sodabottle.stext.models.Key;
-import com.sodabottle.stext.repo.KeyRepo;
+import com.sodabottle.stext.repos.KeyRepo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +24,7 @@ public class KeyController {
 	@Autowired
 	KeyRepo keyRepo;
 	
-	@GetMapping()
+	@GetMapping("/{apiName}")
 	public Key getKey(@PathVariable("apiName") String apiName ) {
 		if(StringUtils.isEmpty(apiName)) {
 			log.info("Get Keys - apiName cannot be null");
@@ -33,18 +35,13 @@ public class KeyController {
 	}
 	
 	@GetMapping()
-	public Key getKeys() {
-		if(StringUtils.isEmpty(apiName)) {
-			log.info("Get Keys - apiName cannot be null");
-			return null;
-		}
-		log.info("Get Keys for apiName: " + apiName);
-		return keyRepo.findByIdApiName(apiName);
+	public List<Key> getKeys() {
+		return keyRepo.findKeys();
 	}
-	
 	
 	@PostMapping()
 	public String postKeys(@RequestBody Key key){
+		key.setCurrentCount(0);
 		keyRepo.save(key);
 		log.info("API Key Created with apiName: " + key.getApiName());
 		return "API key Created Successfully!";

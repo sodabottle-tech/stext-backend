@@ -1,4 +1,4 @@
-package com.sodabottle.stext.repo;
+package com.sodabottle.stext.repos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
