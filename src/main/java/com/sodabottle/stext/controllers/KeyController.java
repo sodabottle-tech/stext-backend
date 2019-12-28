@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class KeyController {
 	
 	@Autowired
-	KeyRepo keyRepo;
+	private KeyRepo keyRepo;
 	
 	@GetMapping()
 	public Key getKey(@PathVariable("apiName") String apiName ) {
