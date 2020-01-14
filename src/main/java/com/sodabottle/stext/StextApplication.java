@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@EnableAsync
+@EnableAsync(proxyTargetClass = true)
 public class StextApplication {
 
     public static void main(String[] args) {

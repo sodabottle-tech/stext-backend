@@ -7,9 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class PushOverDto {
-    private String token;
-    private String user;
+public class PushOverDto extends GenericDto {
     private String title;
     private String message;
     private String device;

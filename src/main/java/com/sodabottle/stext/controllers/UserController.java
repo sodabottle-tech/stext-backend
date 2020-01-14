@@ -2,8 +2,10 @@ package com.sodabottle.stext.controllers;
 
 import com.sodabottle.stext.models.User;
 import com.sodabottle.stext.models.dtos.PushOverDto;
+import com.sodabottle.stext.models.dtos.TelegramDto;
 import com.sodabottle.stext.repos.UserRepo;
 import com.sodabottle.stext.service.AsyncPushOverService;
+import com.sodabottle.stext.service.TelegramClient;
 import com.sodabottle.stext.utils.LogUtils;
 import com.sodabottle.stext.utils.LogUtils.LogState;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,9 @@ public class UserController {
 
     @Autowired
     private AsyncPushOverService pushOverService;
+
+    @Autowired
+    private TelegramClient telegramClient;
 
     @GetMapping()
     public List<User> getUsers() {
@@ -54,16 +59,9 @@ public class UserController {
         LogUtils.appender(log);
 
         pushOverService.postMessage(PushOverDto.builder().title("****** User Registration ******").message(user.toString()).build());
+        telegramClient.postMessage(TelegramDto.builder().text(" ****** User Registration ****** \n \n : " + user.toString()).build());
         return ResponseEntity.ok().body("User Created Successfully!");
     }
 
-    @GetMapping("/testPO")
-    public void test() {
-        pushOverService.postMessage(PushOverDto.builder().title("****** User Registration ******").message("test user").build());
-    }
 
-    @GetMapping("/testError")
-    public void testError() {
-        throw new RuntimeException(" test error ");
-    }
 }

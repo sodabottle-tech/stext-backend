@@ -1,5 +1,6 @@
 package com.sodabottle.stext.clients;
 
+import com.sodabottle.stext.utils.LogUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -25,6 +26,11 @@ public class RestClient {
         headers.entrySet().forEach(header -> httpHeaders.set(header.getKey(), header.getValue()));
 
         HttpEntity<T> request = new HttpEntity<>(body, httpHeaders);
-        restTemplate.postForEntity(uri, request, String.class);
+        try {
+            restTemplate.postForEntity(uri, request, String.class);
+            LogUtils.logMessage(request.toString(), log, LogUtils.LogState.INFO);
+        } catch (Exception e) {
+            LogUtils.logMessage(" Rest Template Error ", log, LogUtils.LogState.ERROR);
+        }
     }
 }
