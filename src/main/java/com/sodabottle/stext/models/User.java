@@ -1,14 +1,10 @@
 package com.sodabottle.stext.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "user")
@@ -16,12 +12,15 @@ import lombok.ToString;
 @Data
 @ToString
 public class User {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	private String email;
-	private String name;
-	private String mobile;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    private String email;
+    private String name;
+    private String mobile;
+
+    private String deviceId;
+    private String deviceType;
 }
