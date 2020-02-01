@@ -20,6 +20,8 @@ public class User {
     private String email;
     private String name;
     private String mobile;
+    private String username;
+    private String password;
 
     private String deviceId;
     private String deviceType;
